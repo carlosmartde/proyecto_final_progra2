@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Html.html to edit this template
+-->
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Proyectos</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Enlace a un CSS externo -->
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Fira Code', monospace;
+            background: linear-gradient(135deg, rgba(20,20,20,1) 0%, rgba(0,0,0,1) 100%);
+            background-image: url('https://www.transparenttextures.com/patterns/cubes.png'); /* Fondo geométrico */
+            color: #c9d1d9;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Contenedor del contenido principal */
+        .main-container {
+            text-align: center;
+            max-width: 1200px;
+            padding: 40px;
+            background-color: rgba(13, 17, 23, 0.9); /* Fondo semi-transparente */
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Estilo para el encabezado */
+        h1 {
+            font-size: 3.5rem;
+            color: #58a6ff;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* Descripción de la página */
+        p {
+            font-size: 1.5rem;
+            color: #8b949e;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        /* Estilos de botones o enlaces a otras partes de la página */
+        .cta-button {
+            background-color: #58a6ff;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 20px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #1f6feb;
+            transform: translateY(-5px); /* Efecto hover */
+        }
+
+        /* Estilos responsivos */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            p {
+                font-size: 1.2rem;
+            }
+
+            .cta-button {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <h1>Bienvenido al Gestor de Proyectos</h1>
+        <p>Organiza, planea y gestiona todos tus proyectos de manera eficiente con nuestra plataforma intuitiva y poderosa. Simplifica tu trabajo y mantén todo bajo control.</p>
+        <!-- Botón Comenzar Ahora que redirige a login.jsp -->
+        <a href="login.jsp" class="cta-button">Comenzar ahora</a>
+    </div>
+
+</body>
+</html>
