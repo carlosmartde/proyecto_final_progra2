@@ -31,12 +31,12 @@ public class UsuarioDAO {
                 usuario.setNombre(rs.getString("nombre"));
                 usuario.setEmail(rs.getString("email"));
                 usuario.setIdRol(rs.getInt("id_rol"));
-                return usuario; // Usuario encontrado
+                return usuario;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null; // Usuario no encontrado
+        return null; 
     }
     public boolean registrarUsuario(Usuario usuario) {
     String sql = "INSERT INTO Usuario (nombre, fechaNacimiento, email, password, genero, id_rol) VALUES (?, ?, ?, ?, ?, ?)";
@@ -54,7 +54,6 @@ public class UsuarioDAO {
         int filasInsertadas = stmt.executeUpdate();
         return filasInsertadas > 0;
     } catch (SQLException e) {
-        // Imprimir la excepción para depurar
         e.printStackTrace();
         return false;
     }

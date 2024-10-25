@@ -13,7 +13,6 @@
     <title>Crear Proyecto</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Ajusta estos estilos para que sean coherentes con tus cards en vistaLider.jsp */
         body {
             font-family: 'Roboto', sans-serif;
             background-color: #1e1e1e;

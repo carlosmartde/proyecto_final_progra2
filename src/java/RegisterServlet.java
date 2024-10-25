@@ -20,7 +20,6 @@ public class RegisterServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-    // Obtener los parámetros del formulario
     String nombre = request.getParameter("nombre");
     String email = request.getParameter("email");
     String password = request.getParameter("password");
@@ -28,7 +27,6 @@ public class RegisterServlet extends HttpServlet {
     String genero = request.getParameter("genero");
     int idRol = Integer.parseInt(request.getParameter("id_rol"));
 
-    // Crear el objeto Usuario y asignar los valores
     Usuario nuevoUsuario = new Usuario();
     nuevoUsuario.setNombre(nombre);
     nuevoUsuario.setEmail(email);
@@ -37,19 +35,16 @@ public class RegisterServlet extends HttpServlet {
     nuevoUsuario.setGenero(genero);
     nuevoUsuario.setIdRol(idRol);
 
-    // Insertar el usuario en la base de datos
     UsuarioDAO usuarioDAO = new UsuarioDAO();
     try {
         boolean registroExitoso = usuarioDAO.registrarUsuario(nuevoUsuario);
 
-        // Redirigir según el resultado del registro
         if (registroExitoso) {
             response.sendRedirect("login.jsp?mensaje=Registro exitoso, inicia sesión");
         } else {
             response.sendRedirect("register.jsp?error=Error en el registro, inténtalo de nuevo");
         }
     } catch (Exception e) {
-        // Capturar cualquier excepción y mostrarla en la consola
         e.printStackTrace();
         response.sendRedirect("register.jsp?error=Error inesperado: " + e.getMessage());
     }

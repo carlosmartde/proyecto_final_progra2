@@ -4,12 +4,6 @@
     Author     : carlo
 --%>
 
-<%-- 
-    Document   : login
-    Created on : 23/10/2024, 4:20:06 p. m.
-    Author     : carlo
---%>
-
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -17,9 +11,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Dev Portal</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Enlace a CSS externo -->
+    <link rel="stylesheet" href="styles.css">
     <style>
-        /* Estilos modernos para un entorno orientado a la programación */
         @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap');
         * {
             box-sizing: border-box;
@@ -109,7 +102,7 @@
         .message {
             margin-bottom: 15px;
             font-size: 0.9rem;
-            color: #f85149; /* Rojo para errores */
+            color: #f85149;
         }
     </style>
 </head>
@@ -122,7 +115,6 @@
             <button type="submit">Entrar</button>
         </form>
 
-        <!-- Mostrar el mensaje de error si existe -->
         <% 
             String error = (String) request.getAttribute("error");
             if (error != null) { 

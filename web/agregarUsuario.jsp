@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Usuario - Dev Portal</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Enlace a CSS externo -->
+    <link rel="stylesheet" href="styles.css">
     <style>
         body {
             font-family: 'Fira Code', monospace;
@@ -84,11 +84,11 @@
         .form-container .message {
             margin-top: 15px;
             font-size: 0.9rem;
-            color: #f85149; /* Rojo para errores */
+            color: #f85149;
         }
 
         .form-container .success {
-            color: #28a745; /* Verde para éxito */
+            color: #28a745;
         }
     </style>
 </head>

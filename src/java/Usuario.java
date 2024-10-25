@@ -16,7 +16,6 @@ public class Usuario {
     private String genero;
     private int idRol;
 
-    // Getters y Setters
     public int getIdUsuario() {
         return idUsuario;
     }

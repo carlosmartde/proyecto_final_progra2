@@ -28,11 +28,9 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // Obtener los datos del formulario de login
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
-        // Conectar a la base de datos y validar el usuario
         try (Connection con = DatabaseConnection.getConnection()) {
             String query = "SELECT id_rol, nombre FROM Usuario WHERE email = ? AND password = ?";
             PreparedStatement ps = con.prepareStatement(query);
@@ -45,29 +43,26 @@ public class LoginServlet extends HttpServlet {
                 int id_rol = rs.getInt("id_rol");
                 String nombre = rs.getString("nombre");
 
-                // Crear sesión para el usuario
                 HttpSession session = request.getSession();
                 session.setAttribute("nombre", nombre);
                 session.setAttribute("email", email);
                 session.setAttribute("id_rol", id_rol);
 
-                // Redirigir según el rol
                 switch (id_rol) {
                     case 1:
-                        response.sendRedirect("vistaLider.jsp"); // Redirigir a la vista del líder
+                        response.sendRedirect("vistaLider.jsp"); 
                         break;
                     case 2:
-                        response.sendRedirect("vistaDeveloper.jsp"); // Redirigir a la vista del developer
+                        response.sendRedirect("vistaDeveloper.jsp");
                         break;
                     case 3:
-                        response.sendRedirect("vistaCliente.jsp"); // Redirigir a la vista del cliente
+                        response.sendRedirect("vistaCliente.jsp");
                         break;
                     default:
                         request.setAttribute("error", "Rol no identificado.");
                         request.getRequestDispatcher("login.jsp").forward(request, response);
                 }
             } else {
-                // Usuario no encontrado o contraseña incorrecta
                 request.setAttribute("error", "Credenciales incorrectas.");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }

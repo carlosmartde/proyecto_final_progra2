@@ -1,3 +1,9 @@
+<%-- 
+    Document   : agregarUsuario
+    Created on : 24/10/2024, 3:47:59 p. m.
+    Author     : carlo
+--%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -5,7 +11,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Usuario - Dev Portal</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Enlace a CSS externo -->
+    <link rel="stylesheet" href="styles.css">
     <style>
         body {
             font-family: 'Fira Code', monospace;
@@ -78,11 +84,11 @@
         .form-container .message {
             margin-top: 15px;
             font-size: 0.9rem;
-            color: #f85149; /* Rojo para errores */
+            color: #f85149;
         }
 
         .form-container .success {
-            color: #28a745; /* Verde para éxito */
+            color: #28a745;
         }
     </style>
 </head>
@@ -93,13 +99,6 @@
             <input type="text" name="nombre" placeholder="Nombre completo" required>
             <input type="email" name="email" placeholder="Correo electrónico" required>
             <input type="password" name="password" placeholder="Contraseña" required>
-            <input type="date" name="fechaNacimiento" placeholder="Fecha de nacimiento" required> <!-- Nuevo campo -->
-            <select name="genero" required> <!-- Nuevo campo -->
-                <option value="" disabled selected>Seleccionar Género</option>
-                <option value="masculino">Masculino</option>
-                <option value="femenino">Femenino</option>
-                <option value="otro">Otro</option>
-            </select>
             <select name="rol" required>
                 <option value="" disabled selected>Seleccionar Rol</option>
                 <option value="1">Líder</option>

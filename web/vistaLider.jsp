@@ -13,7 +13,6 @@
     <title>Vista Líder - Proyectos</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Estilos generales */
         body {
             font-family: 'Roboto', sans-serif;
             background-color: #1e1e1e;
@@ -29,7 +28,6 @@
             font-weight: 300;
         }
 
-        /* Estilos de la tarjeta del proyecto */
         .project-card {
             background-color: #2b2b2b;
             border-radius: 16px;
@@ -41,7 +39,7 @@
         }
 
         .project-card:hover {
-            transform: translateY(-10px); /* Efecto de elevación al pasar el mouse */
+            transform: translateY(-10px);
         }
 
         .project-header {
@@ -51,7 +49,6 @@
             font-weight: 400;
         }
 
-        /* Estilos de la barra de progreso */
         .progress-bar-container {
             background-color: #444;
             border-radius: 16px;
@@ -64,7 +61,7 @@
         .progress-bar {
             background: linear-gradient(90deg, #76c7c0, #34eb83);
             height: 100%;
-            width: 0%; /* Inicialmente en 0, se actualiza dinámicamente */
+            width: 0%;
             border-radius: 16px;
         }
         .create-user-button {
@@ -86,14 +83,12 @@
             background-color: #388e3c;
         }
 
-        /* Información del proyecto */
         .project-info {
             font-size: 1rem;
             color: #aaa;
             margin-bottom: 20px;
         }
 
-        /* Estilos de la lista de tareas */
         .tasks-list {
             list-style-type: none;
             padding: 0;
@@ -132,19 +127,15 @@
     
     <h1>Proyectos de Desarrollo</h1>
 
-    <!-- Ejemplo de tarjeta de proyecto -->
     <div class="project-card">
         <div class="project-header">Proyecto Alpha</div>
         
-        <!-- Barra de progreso -->
         <div class="progress-bar-container">
             <div class="progress-bar" id="progress-bar"></div>
         </div>
         
-        <!-- Información del proyecto -->
         <div class="project-info">Encargado: Developer 1</div>
         
-        <!-- Lista de tareas -->
         <ul class="tasks-list" id="tasks-list">
             <li><input type="checkbox" class="task-checkbox" id="task-1"><label for="task-1">Tarea 1</label></li>
             <li><input type="checkbox" class="task-checkbox" id="task-2"><label for="task-2">Tarea 2</label></li>
@@ -155,12 +146,10 @@
     </div>
 
     <script>
-        // Script para manejar el avance de la barra de progreso
         const checkboxes = document.querySelectorAll('.task-checkbox');
         const progressBar = document.getElementById('progress-bar');
         const totalTasks = checkboxes.length;
 
-        // Función para actualizar la barra de progreso
         function updateProgress() {
             let completedTasks = 0;
             checkboxes.forEach(checkbox => {
@@ -172,7 +161,6 @@
             progressBar.style.width = progressPercentage + '%';
         }
 
-        // Añadir evento para actualizar la barra al marcar/desmarcar una tarea
         checkboxes.forEach(checkbox => {
             checkbox.addEventListener('change', updateProgress);
         });
