@@ -1,10 +1,11 @@
 <%-- 
     Document   : crearProyecto
-    Created on : 24/10/2024, 11:27:10 p. m.
+    Created on : 26/10/2024, 8:03:11 a. m.
     Author     : carlo
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.sql.*"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -17,74 +18,148 @@
             font-family: 'Roboto', sans-serif;
             background-color: #1e1e1e;
             color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
+            padding: 20px;
         }
-
-        .form-container {
+        form {
+            max-width: 600px;
+            margin: 0 auto;
             background-color: #2b2b2b;
             padding: 20px;
-            border-radius: 12px;
+            border-radius: 10px;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-            max-width: 500px;
-            width: 100%;
         }
-
-        .form-container h1 {
-            color: #4caf50;
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="date"] {
+            color: #333;
+        }
+        button {
+            background-color: #4caf50;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #388e3c;
+        }
+        #task-container {
             margin-bottom: 20px;
         }
-
-        .form-container label, .form-container select, .form-container input, .form-container button {
-            display: block;
-            width: 100%;
-            margin-bottom: 15px;
+        .task-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
         }
-
-        .form-container button {
-            background-color: #4caf50;
-            border: none;
-            padding: 10px;
-            border-radius: 6px;
-            cursor: pointer;
-            color: #fff;
-        }
-
-        .form-container button:hover {
-            background-color: #388e3c;
+        .task-item input {
+            flex: 1;
+            margin-right: 10px;
+            min-width: 250px; /* Aumenta el tamaño mínimo del campo */
         }
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <h1>Crear Nuevo Proyecto</h1>
-        <form action="CrearProyectoServlet" method="POST">
-            <label for="nombre">Nombre del Proyecto:</label>
-            <input type="text" name="nombre" id="nombre" required>
+    <h1>Crear Proyecto</h1>
 
-            <label for="cliente">Cliente:</label>
-            <input type="text" name="cliente" id="cliente" required>
+    <form action="CrearProyectoServlet" method="post">
+        <label for="nombreProyecto">Nombre del Proyecto:</label>
+        <input type="text" id="nombreProyecto" name="nombreProyecto" required>
 
-            <label for="developer">Developer a Cargo:</label>
-            <select name="developer" id="developer">
-                <%-- Aquí obtendremos los developers de la base de datos --%>
-                <% 
-                    List<Developer> developers = (List<Developer>) request.getAttribute("developers");
-                    if (developers != null) {
-                        for (Developer dev : developers) {
-                %>
-                            <option value="<%= dev.getId() %>"><%= dev.getNombre() %></option>
-                <% 
-                        }
+        <label for="idCliente">Asignar Cliente:</label>
+        <select id="idCliente" name="idCliente" required>
+            <option value="">Selecciona un cliente</option>
+            <% 
+                // Conexión a la base de datos para obtener la lista de clientes
+                try {
+                    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "");
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery("SELECT id_cliente, nombre FROM cliente");
+                    while (rs.next()) {
+                        out.println("<option value=\"" + rs.getInt("id_cliente") + "\">" + rs.getString("nombre") + "</option>");
                     }
-                %>
-            </select>
+                    rs.close();
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            %>
+        </select>
 
-            <button type="submit">Crear Proyecto</button>
-        </form>
-    </div>
+        <label for="idDeveloper">Asignar Developer:</label>
+        <select id="idDeveloper" name="idDeveloper" required>
+            <option value="">Selecciona un developer</option>
+            <% 
+                // Conexión a la base de datos para obtener la lista de developers
+                try {
+                    Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydb", "root", "");
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery("SELECT id_developer, nombre FROM developer");
+                    while (rs.next()) {
+                        out.println("<option value=\"" + rs.getInt("id_developer") + "\">" + rs.getString("nombre") + "</option>");
+                    }
+                    rs.close();
+                    stmt.close();
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            %>
+        </select>
+
+        <label for="fechaCreacion">Fecha de Creación:</label>
+        <input type="date" id="fechaCreacion" name="fechaCreacion" required>
+
+        <label for="fechaFinalizacion">Fecha de Finalización:</label>
+        <input type="date" id="fechaFinalizacion" name="fechaFinalizacion">
+
+        <div id="task-container">
+            <label>Tareas:</label>
+            <div class="task-item">
+                <input type="text" name="tareas[]" placeholder="Descripción de la tarea">
+                <button type="button" onclick="addTask()">Agregar otra tarea</button>
+            </div>
+        </div>
+
+        <button type="submit">Guardar Proyecto</button>
+    </form>
+
+    <script>
+        function addTask() {
+            const taskContainer = document.getElementById('task-container');
+            const newTask = document.createElement('div');
+            newTask.classList.add('task-item');
+            newTask.innerHTML = '<input type="text" name="tareas[]" placeholder="Descripción de la tarea"><button type="button" onclick="removeTask(this)">Eliminar</button>';
+            taskContainer.appendChild(newTask);
+        }
+
+        function removeTask(button) {
+            const taskItem = button.parentElement;
+            taskItem.remove();
+        }
+    </script>
+
+    <%-- Al final de tu archivo crearProyecto.jsp --%>
+    <%
+        String success = request.getParameter("success");
+        if ("true".equals(success)) {
+    %>
+        <script>
+            alert("Proyecto guardado exitosamente");
+        </script>
+    <%
+        }
+    %>
 </body>
 </html>

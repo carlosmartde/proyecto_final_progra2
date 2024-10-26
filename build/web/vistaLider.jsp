@@ -131,6 +131,7 @@
     <div class="button-container">
         <a href="agregarUsuario.jsp">Crear Usuario</a>
         <a href="crearTarea.jsp">Crear Tarea</a>
+        <a href="crearProyecto.jsp">Crear Proyecto</a>
     </div>
 
     
