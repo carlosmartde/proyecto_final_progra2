@@ -64,15 +64,10 @@
             width: 0%;
             border-radius: 16px;
         }
-        .button-container {
+        .create-user-button {
             position: absolute;
             top: 20px;
             right: 20px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .button-container a {
             background-color: #4caf50;
             color: #fff;
             padding: 10px 20px;
@@ -84,10 +79,9 @@
             transition: background-color 0.3s;
         }
 
-        .button-container a:hover {
+        .create-user-button:hover {
             background-color: #388e3c;
         }
-
 
         .project-info {
             font-size: 1rem;
@@ -127,12 +121,9 @@
         }
     </style>
 </head>
-<body>
-    <div class="button-container">
-        <a href="agregarUsuario.jsp">Crear Usuario</a>
-        <a href="crearTarea.jsp">Crear Tarea</a>
-    </div>
-
+<body  onload="progressBar(1)">
+    
+    <a href="agregarUsuario.jsp" class="create-user-button">Crear Usuario</a>
     
     <h1>Proyectos de Desarrollo</h1>
 
@@ -153,26 +144,6 @@
             <li><input type="checkbox" class="task-checkbox" id="task-5"><label for="task-5">Tarea 5</label></li>
         </ul>
     </div>
-
-    <script>
-        const checkboxes = document.querySelectorAll('.task-checkbox');
-        const progressBar = document.getElementById('progress-bar');
-        const totalTasks = checkboxes.length;
-
-        function updateProgress() {
-            let completedTasks = 0;
-            checkboxes.forEach(checkbox => {
-                if (checkbox.checked) {
-                    completedTasks++;
-                }
-            });
-            const progressPercentage = (completedTasks / totalTasks) * 100;
-            progressBar.style.width = progressPercentage + '%';
-        }
-
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', updateProgress);
-        });
-    </script>
+    <script src="./js/progressBar.js"></script>
 </body>
 </html>

@@ -34,7 +34,7 @@
             text-align: center;
         }
 
-        .form-container h1 {
+.form-container h1 {
             font-size: 2rem;
             margin-bottom: 20px;
             color: #58a6ff;
@@ -65,8 +65,7 @@
             border-color: #58a6ff;
             outline: none;
         }
-
-        .form-container button {
+  .form-container button {
             background-color: #238636;
             border: none;
             padding: 15px;
@@ -99,6 +98,18 @@
             <input type="text" name="nombre" placeholder="Nombre completo" required>
             <input type="email" name="email" placeholder="Correo electrónico" required>
             <input type="password" name="password" placeholder="Contraseña" required>
+            
+            <!-- Campo para la fecha de nacimiento -->
+ <input type="date" name="fechaNacimiento" required>
+            
+            <!-- Campo para el género -->
+            <select name="genero" required>
+                <option value="" disabled selected>Seleccionar Género</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+                <option value="Otro">Otro</option>
+            </select>
+            
             <select name="rol" required>
                 <option value="" disabled selected>Seleccionar Rol</option>
                 <option value="1">Líder</option>

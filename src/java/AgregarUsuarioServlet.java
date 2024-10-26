@@ -12,6 +12,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 /**
  *
  * @author carlo
@@ -31,6 +33,7 @@ public class AgregarUsuarioServlet extends HttpServlet {
         
         Connection conn = null;
         PreparedStatement stmt = null;
+        ResultSet rs = null;
         
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -40,8 +43,9 @@ public class AgregarUsuarioServlet extends HttpServlet {
             String clave = "";
             conn = DriverManager.getConnection(url, usuario, clave);
             
-            String sql = "INSERT INTO usuario (nombre, email, password, fechaNacimiento, genero, id_rol) VALUES (?, ?, ?, ?, ?, ?)";
-            stmt = conn.prepareStatement(sql);
+            // Inserta el nuevo usuario en la tabla `usuario`
+            String sqlUsuario = "INSERT INTO usuario (nombre, email, password, fechaNacimiento, genero, id_rol) VALUES (?, ?, ?, ?, ?, ?)";
+            stmt = conn.prepareStatement(sqlUsuario, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, nombre);
             stmt.setString(2, email);
             stmt.setString(3, password);
@@ -51,7 +55,37 @@ public class AgregarUsuarioServlet extends HttpServlet {
             
             int filasAfectadas = stmt.executeUpdate();
             
-            if (filasAfectadas > 0) {
+            // Obtiene el `id_usuario` generado
+            int idUsuario = -1;
+            rs = stmt.getGeneratedKeys();
+            if (rs.next()) {
+                idUsuario = rs.getInt(1);
+            }
+
+            if (idUsuario > 0) {
+                String sqlRol;
+                
+                if (rol == 1) {  // Rol Lider
+                    sqlRol = "INSERT INTO lider (id_usuario, nombre, email, password, fechaNacimiento, genero) VALUES (?, ?, ?, ?, ?, ?)";
+                } else if (rol == 2) {  // Rol Developer
+                    sqlRol = "INSERT INTO developer (id_usuario, nombre, email, password, fechaNacimiento, genero) VALUES (?, ?, ?, ?, ?, ?)";
+                } else if (rol == 3) {  // Rol Cliente
+                    sqlRol = "INSERT INTO cliente (id_usuario, nombre, email, password, fechaNacimiento, genero) VALUES (?, ?, ?, ?, ?, ?)";
+                } else {
+                    throw new IllegalArgumentException("Rol no reconocido");
+                }
+                
+                // Inserta en la tabla correspondiente según el rol
+                stmt = conn.prepareStatement(sqlRol);
+                stmt.setInt(1, idUsuario);
+                stmt.setString(2, nombre);
+                stmt.setString(3, email);
+                stmt.setString(4, password);
+                stmt.setString(5, fechaNacimiento);
+                stmt.setString(6, genero);
+                
+                stmt.executeUpdate();
+                
                 response.sendRedirect("agregarUsuario.jsp?mensaje=Usuario agregado correctamente&status=success");
             } else {
                 response.sendRedirect("agregarUsuario.jsp?mensaje=Error al agregar usuario");
@@ -61,6 +95,7 @@ public class AgregarUsuarioServlet extends HttpServlet {
             response.sendRedirect("agregarUsuario.jsp?mensaje=Error en la base de datos: " + e.getMessage());
         } finally {
             try {
+                if (rs != null) rs.close();
                 if (stmt != null) stmt.close();
                 if (conn != null) conn.close();
             } catch (Exception e) {

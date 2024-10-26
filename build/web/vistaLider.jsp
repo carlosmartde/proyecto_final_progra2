@@ -64,10 +64,15 @@
             width: 0%;
             border-radius: 16px;
         }
-        .create-user-button {
+        .button-container {
             position: absolute;
             top: 20px;
             right: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .button-container a {
             background-color: #4caf50;
             color: #fff;
             padding: 10px 20px;
@@ -79,9 +84,10 @@
             transition: background-color 0.3s;
         }
 
-        .create-user-button:hover {
+        .button-container a:hover {
             background-color: #388e3c;
         }
+
 
         .project-info {
             font-size: 1rem;
@@ -122,8 +128,11 @@
     </style>
 </head>
 <body>
-    
-    <a href="agregarUsuario.jsp" class="create-user-button">Crear Usuario</a>
+    <div class="button-container">
+        <a href="agregarUsuario.jsp">Crear Usuario</a>
+        <a href="crearTarea.jsp">Crear Tarea</a>
+    </div>
+
     
     <h1>Proyectos de Desarrollo</h1>
 
